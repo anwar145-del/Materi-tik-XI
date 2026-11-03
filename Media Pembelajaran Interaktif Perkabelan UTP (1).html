@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perkabelan UTP - SMA Negeri 1 Warmare</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .cable-stripe {
+            background-size: 10px 10px;
+        }
+        /* Custom Cable Colors */
+        .bg-po { background: repeating-linear-gradient(45deg, #f97316, #f97316 6px, #ffffff 6px, #ffffff 12px); }
+        .bg-o  { background-color: #ea580c; }
+        .bg-ph { background: repeating-linear-gradient(45deg, #22c55e, #22c55e 6px, #ffffff 6px, #ffffff 12px); }
+        .bg-b  { background-color: #2563eb; }
+        .bg-pb { background: repeating-linear-gradient(45deg, #3b82f6, #3b82f6 6px, #ffffff 6px, #ffffff 12px); }
+        .bg-h  { background-color: #16a34a; }
+        .bg-pc { background: repeating-linear-gradient(45deg, #854d0e, #854d0e 6px, #ffffff 6px, #ffffff 12px); }
+        .bg-c  { background-color: #78350f; }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+
+    <!-- HEADER / IDENTITAS -->
+    <header class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-4">
+                <div>
+                    <div class="flex items-center justify-center md:justify-start gap-3 mb-1">
+                        <span class="bg-blue-500/30 text-blue-200 text-xs font-semibold px-3 py-1 rounded-full border border-blue-400/30">
+                            INFORMATIKA / TIK KELAS XI
+                        </span>
+                        <span class="bg-emerald-500/30 text-emerald-200 text-xs font-semibold px-3 py-1 rounded-full border border-emerald-400/30">
+                            KURIKULUM MERDEKA
+                        </span>
+                    </div>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+                        SMA NEGERI 1 WARMARE
+                    </h1>
+                    <p class="text-blue-200 font-medium text-sm sm:text-base mt-1">
+                        Modul Pembelajaran Interaktif: Jaringan Komputer & Pengkabelan UTP (8 Warna)
+                    </p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md px-5 py-3 rounded-2xl border border-white/20 text-right min-w-[220px]">
+                    <p class="text-xs text-blue-200 uppercase font-semibold tracking-wider">Guru Mata Pelajaran</p>
+                    <p class="text-base font-bold text-white flex items-center justify-center md:justify-end gap-2 mt-0.5">
+                        <i class="fa-solid fa-user-tie text-emerald-400"></i>
+                        Anwar Musadad, S.Kom., Gr.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVIGASI UTAMA -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap justify-center sm:justify-start gap-2 py-3" id="nav-tabs">
+                <button onclick="switchTab('fakta')" id="tab-fakta" class="nav-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 bg-indigo-600 text-white shadow-md shadow-indigo-200">
+                    <i class="fa-solid fa-lightbulb"></i> 📌 Fakta Menarik
+                </button>
+                <button onclick="switchTab('materi')" id="tab-materi" class="nav-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                    <i class="fa-solid fa-book-open"></i> 📚 Ringkasan Materi
+                </button>
+                <button onclick="switchTab('simulasi')" id="tab-simulasi" class="nav-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                    <i class="fa-solid fa-network-wired"></i> 🎨 Simulasi Kabel Interaktif
+                </button>
+                <button onclick="switchTab('kuis')" id="tab-kuis" class="nav-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 text-slate-600 hover:bg-slate-100">
+                    <i class="fa-solid fa-pen-to-square"></i> 📝 Kuis Seru (25 Soal)
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- KONTEN UTAMA CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
+
+        <!-- TAB 1: FAKTA MENARIK -->
+        <section id="content-fakta" class="tab-content block space-y-6 animate-fade-in">
+            <div class="bg-gradient-to-r from-amber-500 to-orange-600 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+                <div class="absolute right-0 top-0 translate-x-8 -translate-y-8 opacity-20 text-9xl">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-bold mb-2">Tahukah Kamu? 💡</h2>
+                <p class="text-amber-100 max-w-2xl text-sm sm:text-base">
+                    Di balik jaringan internet super cepat yang kita gunakan sehari-hari, ada peran luar biasa dari 8 helai kawat tembaga kecil berwarna-warni yang dililit dengan presisi tinggi!
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center text-xl mb-4 font-bold">1</div>
+                    <h3 class="font-bold text-lg text-slate-800 mb-2">Mengapa Harus Dililit? (Twisted)</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Kabel UTP (Unshielded Twisted Pair) melilit 8 kawatnya menjadi 4 pasang. Lilitan ini bertujuan **menghilangkan interferensi elektromagnetik** dan kebocoran sinyal (crosstalk) antar kabel tetangga.
+                    </p>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-xl mb-4 font-bold">2</div>
+                    <h3 class="font-bold text-lg text-slate-800 mb-2">Hanya 4 Kabel yang Utama Bertukar Data!</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Pada standar Fast Ethernet (10/100 Mbps), ternyata **hanya 4 kabel yang digunakan** untuk kirim & terima data (Pin 1, 2, 3, dan 6). 4 kabel sisanya digunakan sebagai cadangan atau Power over Ethernet (PoE)!
+                    </p>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-xl mb-4 font-bold">3</div>
+                    <h3 class="font-bold text-lg text-slate-800 mb-2">Asal Usul Nama RJ-45</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Konektor yang biasa dipakai bernama **RJ-45** (Registered Jack 45). Memiliki 8 pin konduktor berlapis emas tipis untuk menjaga transmisi listrik tetap maksimal tanpa korosi.
+                    </p>
+                </div>
+                <!-- Card 4 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-xl mb-4 font-bold">4</div>
+                    <h3 class="font-bold text-lg text-slate-800 mb-2">Jarak Maksimal 100 Meter</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Kabel UTP memiliki batas panjang efektif **100 meter**. Jika melebihi jarak tersebut, sinyal data akan mengalami pelemahan (attenuation) sehingga memerlukan alat bernama *Repeater* atau *Switch*.
+                    </p>
+                </div>
+                <!-- Card 5 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-rose-100 text-rose-600 rounded-xl flex items-center justify-center text-xl mb-4 font-bold">5</div>
+                    <h3 class="font-bold text-lg text-slate-800 mb-2">Auto-MDIX: Fitur Pintar Modern</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Dulu, menghubungkan PC ke PC wajib memakai kabel Crossover. Sekarang, perangkat modern punya fitur **Auto-MDIX** yang secara otomatis mendeteksi kabel Straight meskipun dicolok ke sesama PC!
+                    </p>
+                </div>
+                <!-- Card 6 -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center text-xl mb-4 font-bold">6</div>
+                    <h3 class="font-bold text-lg text-slate-800 mb-2">Kode Warna Berstandar Internasional</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        8 warna tidak dipilih secara acak! Standar warna **TIA/EIA-568** disepakati di seluruh dunia agar teknisi jaringan di negara mana pun bisa memelihara jaringan secara seragam.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: RINGKASAN MATERI -->
+        <section id="content-materi" class="tab-content hidden space-y-8">
+            <!-- Ringkasan Intro -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4 flex items-center gap-3">
+                    <i class="fa-solid fa-book text-indigo-600"></i> Pengenalan Kabel UTP & 8 Warna
+                </h2>
+                <p class="text-slate-600 leading-relaxed mb-6">
+                    Kabel UTP (Unshielded Twisted Pair) berisi **8 kawat tembaga terisolasi** yang dikelompokkan menjadi 4 pasang warna. Setiap kawat memiliki peranan spesifik dalam menyalurkan sinyal transmisi (TX) dan penerimaan (RX) data.
+                </p>
+
+                <!-- Tabel Warna & Fungsi -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 border-b border-slate-200 text-slate-700">
+                                <th class="p-3 font-semibold">No (Pin)</th>
+                                <th class="p-3 font-semibold">Warna Kabel</th>
+                                <th class="p-3 font-semibold">Simbol Kode</th>
+                                <th class="p-3 font-semibold">Fungsi Utama (Ethernet 10/100 Mbps)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr>
+                                <td class="p-3 font-bold text-center">1</td>
+                                <td class="p-3 flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-po border border-slate-300 inline-block"></span> Putih - Oranye</td>
+                                <td class="p-3 font-mono text-xs">TX+</td>
+                                <td class="p-3">Mengirim Data Positif (Transmit Data +)</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-center">2</td>
+                                <td class="p-3 flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-o border border-slate-300 inline-block"></span> Oranye</td>
+                                <td class="p-3 font-mono text-xs">TX-</td>
+                                <td class="p-3">Mengirim Data Negatif (Transmit Data -)</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-center">3</td>
+                                <td class="p-3 flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-ph border border-slate-300 inline-block"></span> Putih - Hijau</td>
+                                <td class="p-3 font-mono text-xs">RX+</td>
+                                <td class="p-3">Menerima Data Positif (Receive Data +)</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-center">4</td>
+                                <td class="p-3 flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-b border border-slate-300 inline-block"></span> Biru</td>
+                                <td class="p-3 font-mono text-xs">NC / PoE</td>
+                                <td class="p-3">Cadangan / Power over Ethernet (PoE) / Telepon</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-center">5</td>
+                                <td class="p-3 flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-pb border border-slate-300 inline-block"></span> Putih - Biru</td>
+                                <td class="p-3 font-mono text-xs">NC / PoE</td>
+                                <td class="p-3">Cadangan / Power over Ethernet (PoE) / Telepon</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-center">6</td>
+                                <td class="p-3 flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-h border border-slate-300 inline-block"></span> Hijau</td>
+                                <td class="p-3 font-mono text-xs">RX-</td>
+                                <td class="p-3">Menerima Data Negatif (Receive Data -)</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-center">7</td>
+                                <td class="p-3 flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-pc border border-slate-300 inline-block"></span> Putih - Cokelat</td>
+                                <td class="p-3 font-mono text-xs">NC / DC</td>
+                                <td class="p-3">Cadangan / Ground / Arus Listrik PoE</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-center">8</td>
+                                <td class="p-3 flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-c border border-slate-300 inline-block"></span> Cokelat</td>
+                                <td class="p-3 font-mono text-xs">NC / DC</td>
+                                <td class="p-3">Cadangan / Ground / Arus Listrik PoE</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Standar T568A dan T568B -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- T568A -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-bold text-slate-800">Standar T568A</h3>
+                        <span class="bg-emerald-100 text-emerald-800 text-xs px-3 py-1 rounded-full font-bold">Standar A</span>
+                    </div>
+                    <ol class="space-y-2 text-sm text-slate-700">
+                        <li class="flex items-center gap-2"><span class="w-4 h-4 rounded bg-ph"></span> 1. Putih - Hijau</li>
+                        <li class="flex items-center gap-2"><span class="w-4 h-4 rounded bg-h"></span> 2. Hijau</li>
+                        <li class="flex items-center gap-2"><span class="w-4 h-4 rounded bg-po"></span> 3. Putih - Oranye</li>
+                        <li class="flex items-center gap-2"><span class="w-4 h-4 rounded bg-b"></span> 4. Biru</li>
+                        <li class="flex items-center gap-2"><span class="w-4 h-4 rounded bg-pb"></span> 5. Putih - Biru</li>
+                        <li class="flex items-center gap-2"><span class="w-4 h-4 rounded bg-o"></span> 6. Oranye</li>
+                        <li class="flex items-center gap-2"><span class="w-4 h-4 rounded bg-pc"></span> 7. Putih - Cokelat</li>
+                        <li class="flex items-center gap-2"><span class="w-4 h-4 rounded bg-c"></span> 8. Cokelat</li>
+                    </ol>
+                </div>
+
+                <!-- T568B -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-bold text-slate-800">Standar T568B</h3>
+                        <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full font-bold">Standar B (Populer)</span>
+                    </div>
+                    <ol class="space-y-2 text-sm text-slate-700">
+                        <li class="flex items-center gap-2"><span class="w-4 h-4 rounded bg-po"></span> 1. Putih - Oranye</li>
+                        <li class="flex items-center gap-2"><span class="w-4 h-4 rounded bg-o"></span> 2. Oranye</li>
+                        <li class="flex items-center gap-2"><span class="w-4 h-4 rounded bg-ph"></span> 3. Putih - Hijau</li>
+                        <li class="flex items-center gap-2"><span class="w-4 h-4 rounded bg-b"></span> 4. Biru</li>
+                        <li class="flex items-center gap-2"><span class="w-4 h-4 rounded bg-pb"></span> 5. Putih - Biru</li>
+                        <li class="flex items-center gap-2"><span class="w-4 h-4 rounded bg-h"></span> 6. Hijau</li>
+                        <li class="flex items-center gap-2"><span class="w-4 h-4 rounded bg-pc"></span> 7. Putih - Cokelat</li>
+                        <li class="flex items-center gap-2"><span class="w-4 h-4 rounded bg-c"></span> 8. Cokelat</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Straight vs Crossover -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200 space-y-6">
+                <h3 class="text-xl font-bold text-slate-800">Perbedaan Tipe Kabel: Straight-Through vs Crossover</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                        <h4 class="font-bold text-indigo-900 mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-arrows-left-right"></i> Kabel Straight-Through
+                        </h4>
+                        <p class="text-sm text-slate-600 mb-3">
+                            Kedua ujung kabel memiliki **standar yang SAMA** (misal: Ujung A = T568B & Ujung B = T568B).
+                        </p>
+                        <p class="text-xs font-semibold text-slate-700 uppercase mb-1">Digunakan untuk perangkat BERBEDA:</p>
+                        <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside">
+                            <li>Komputer ke Switch / Hub</li>
+                            <li>Router ke Switch</li>
+                            <li>Laptop ke Access Point</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                        <h4 class="font-bold text-indigo-900 mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-arrow-rotate-left"></i> Kabel Crossover
+                        </h4>
+                        <p class="text-sm text-slate-600 mb-3">
+                            Kedua ujung kabel memiliki **standar yang BERBEDA** (Ujung A = T568A & Ujung B = T568B). Pin 1&3 dan 2&6 saling disilang.
+                        </p>
+                        <p class="text-xs font-semibold text-slate-700 uppercase mb-1">Digunakan untuk perangkat SEJENIS:</p>
+                        <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside">
+                            <li>Komputer ke Komputer (Direct)</li>
+                            <li>Switch ke Switch</li>
+                            <li>Router ke Router</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alat-alat Crimping -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200">
+                <h3 class="text-xl font-bold text-slate-800 mb-4">Peralatan Pembuatan Kabel UTP</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="p-4 rounded-xl border border-slate-100 bg-slate-50">
+                        <div class="text-2xl text-indigo-600 mb-2"><i class="fa-solid fa-scissors"></i></div>
+                        <h4 class="font-bold text-sm text-slate-800">Tang Crimping</h4>
+                        <p class="text-xs text-slate-500 mt-1">Alat khusus untuk mengunci konektor RJ-45 dan memotong kabel.</p>
+                    </div>
+                    <div class="p-4 rounded-xl border border-slate-100 bg-slate-50">
+                        <div class="text-2xl text-blue-600 mb-2"><i class="fa-solid fa-plug"></i></div>
+                        <h4 class="font-bold text-sm text-slate-800">Konektor RJ-45</h4>
+                        <p class="text-xs text-slate-500 mt-1">Konektor 8 pin berlapis emas tempat menyelipkan 8 kawat UTP.</p>
+                    </div>
+                    <div class="p-4 rounded-xl border border-slate-100 bg-slate-50">
+                        <div class="text-2xl text-emerald-600 mb-2"><i class="fa-solid fa-microchip"></i></div>
+                        <h4 class="font-bold text-sm text-slate-800">LAN Tester</h4>
+                        <p class="text-xs text-slate-500 mt-1">Alat penguji apakah kedelapan pin terkoneksi dengan benar (LED 1-8).</p>
+                    </div>
+                    <div class="p-4 rounded-xl border border-slate-100 bg-slate-50">
+                        <div class="text-2xl text-amber-600 mb-2"><i class="fa-solid fa-box"></i></div>
+                        <h4 class="font-bold text-sm text-slate-800">Kabel Stripper</h4>
+                        <p class="text-xs text-slate-500 mt-1">Alat pengupas jaket pembungkus luar kabel UTP tanpa merusak kawat.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: SIMULASI INTERAKTIF -->
+        <section id="content-simulasi" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200 text-center">
+                <h2 class="text-2xl font-bold text-slate-800 mb-2">Simulator Urutan 8 Warna UTP</h2>
+                <p class="text-slate-600 text-sm max-w-xl mx-auto mb-6">
+                    Pilih standar pengkabelan di bawah ini, lalu klik pada kawat kabel untuk melihat peran dan fungsinya!
+                </p>
+
+                <!-- Switch Mode Standard -->
+                <div class="inline-flex p-1 bg-slate-100 rounded-2xl mb-8 border border-slate-200">
+                    <button onclick="setSimStandard('B')" id="btn-std-b" class="px-6 py-2.5 rounded-xl font-bold text-sm transition-all bg-indigo-600 text-white shadow-sm">
+                        Standar T568B (Populer)
+                    </button>
+                    <button onclick="setSimStandard('A')" id="btn-std-a" class="px-6 py-2.5 rounded-xl font-bold text-sm transition-all text-slate-600 hover:text-slate-900">
+                        Standar T568A
+                    </button>
+                </div>
+
+                <!-- Visual Connector RJ45 Container -->
+                <div class="max-w-xl mx-auto bg-slate-800 p-6 rounded-3xl shadow-2xl border-4 border-slate-700 relative">
+                    <div class="text-white/60 text-xs font-mono mb-4 uppercase tracking-widest">
+                        Tampak Atas Konektor RJ-45 (Pin 1 → Pin 8)
+                    </div>
+
+                    <!-- Cable Wires Grid -->
+                    <div class="grid grid-cols-8 gap-2 bg-slate-900 p-4 rounded-2xl border border-slate-700" id="sim-wire-container">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </div>
+
+                <!-- Detail Panel Warna Terpilih -->
+                <div id="sim-detail-box" class="mt-8 max-w-xl mx-auto p-5 rounded-2xl bg-indigo-50 border border-indigo-100 text-left">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span id="detail-color-badge" class="w-6 h-6 rounded-full border border-slate-400 bg-po"></span>
+                        <h4 id="detail-title" class="font-bold text-slate-800 text-lg">Klik salah satu kawat warna di atas</h4>
+                    </div>
+                    <p id="detail-desc" class="text-sm text-slate-600">
+                        Detail pin, sinyal transmisi/penerimaan, dan fungsi spesifik akan ditampilkan di sini.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: KUIS SERU (25 SOAL) -->
+        <section id="content-kuis" class="tab-content hidden space-y-6">
+            <div id="quiz-start-screen" class="bg-white p-8 sm:p-12 rounded-3xl shadow-sm border border-slate-200 text-center space-y-6 max-w-2xl mx-auto">
+                <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-3xl flex items-center justify-center text-4xl mx-auto">
+                    <i class="fa-solid fa-gamepad"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">Kuis Evaluasi 8 Warna UTP</h2>
+                    <p class="text-slate-600 text-sm mt-2">
+                        Uji pemahamanmu tentang pengkabelan jaringan! Terdapat **25 Soal Pilihan Ganda (A sampai E)**.
+                    </p>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left text-xs space-y-2 text-slate-600">
+                    <p class="font-semibold text-slate-800">Petunjuk Pengerjaan:</p>
+                    <p>• Pilihlah salah satu jawaban paling tepat dari opsi A, B, C, D, atau E.</p>
+                    <p>• Skor akhir dan pembahasan lengkap akan muncul secara otomatis di akhir kuis.</p>
+                </div>
+                <button onclick="startQuiz()" class="w-full bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-bold py-4 rounded-2xl shadow-lg hover:shadow-indigo-200 transition text-lg">
+                    🚀 Mulai Kuis Sekarang
+                </button>
+            </div>
+
+            <!-- Quiz Screen Active -->
+            <div id="quiz-active-screen" class="hidden max-w-3xl mx-auto space-y-6">
+                <!-- Progress Header -->
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-slate-500 font-semibold uppercase">Soal Nomor</span>
+                        <h3 class="text-xl font-bold text-indigo-600" id="quiz-progress-text">1 / 25</h3>
+                    </div>
+                    <div class="w-48 bg-slate-100 rounded-full h-3 overflow-hidden">
+                        <div id="quiz-progress-bar" class="bg-indigo-600 h-full w-0 transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <!-- Card Question -->
+                <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200 space-y-6">
+                    <h3 id="quiz-question-text" class="text-lg sm:text-xl font-bold text-slate-800 leading-relaxed">
+                        Pertanyaan kuis akan dimuat di sini...
+                    </h3>
+
+                    <!-- Options (A-E) -->
+                    <div id="quiz-options-container" class="space-y-3">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Nav Prev/Next Buttons -->
+                <div class="flex justify-between items-center">
+                    <button onclick="prevQuestion()" id="btn-prev-q" class="px-5 py-2.5 rounded-xl text-slate-600 font-semibold bg-white border border-slate-200 hover:bg-slate-50 text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-left"></i> Sebelumnya
+                    </button>
+                    <button onclick="nextQuestion()" id="btn-next-q" class="px-6 py-2.5 rounded-xl text-white font-semibold bg-indigo-600 hover:bg-indigo-700 text-sm flex items-center gap-2 shadow-sm">
+                        Selanjutnya <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Result Screen -->
+            <div id="quiz-result-screen" class="hidden max-w-3xl mx-auto space-y-6">
+                <div class="bg-white p-8 sm:p-10 rounded-3xl shadow-sm border border-slate-200 text-center space-y-4">
+                    <div class="w-24 h-24 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-4xl mx-auto font-bold" id="score-circle">
+                        100
+                    </div>
+                    <h2 class="text-3xl font-extrabold text-slate-800">Kuis Selesai! 🎉</h2>
+                    <p class="text-slate-600" id="score-summary-text">
+                        Kamu menjawab 25 dari 25 soal dengan benar.
+                    </p>
+                    <button onclick="restartQuiz()" class="px-6 py-3 rounded-2xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition">
+                        🔄 Ulangi Kuis
+                    </button>
+                </div>
+
+                <!-- Discussion / Pembahasan -->
+                <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200 space-y-6">
+                    <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-indigo-600"></i> Pembahasan Soal Kuis
+                    </h3>
+                    <div id="discussion-container" class="space-y-4">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-6 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs space-y-2">
+            <p class="font-semibold text-slate-300">
+                SMA NEGERI 1 WARMARE — MATA PELAJARAN TIK / INFORMATIKA KELAS XI
+            </p>
+            <p>Guru Pengampu: <span class="text-indigo-400">Anwar Musadad, S.Kom., Gr.</span></p>
+            <p class="text-slate-500">© Modern Interactive Learning Experience for High School Students</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // DATA SET WIRE 8 WARNA
+        const wireData = {
+            'B': [
+                { pin: 1, name: "Putih - Oranye", code: "bg-po", func: "TX+ (Transmit Data Positive)", detail: "Mengirimkan sinyal paket data bernilai positif pada standar T568B." },
+                { pin: 2, name: "Oranye", code: "bg-o", func: "TX- (Transmit Data Negative)", detail: "Mengirimkan sinyal paket data bernilai negatif pada standar T568B." },
+                { pin: 3, name: "Putih - Hijau", code: "bg-ph", func: "RX+ (Receive Data Positive)", detail: "Menerima sinyal paket data bernilai positif pada standar T568B." },
+                { pin: 4, name: "Biru", code: "bg-b", func: "Cadangan / PoE / Telepon", detail: "Digunakan untuk PoE (Power over Ethernet) atau penyalur suara telepon." },
+                { pin: 5, name: "Putih - Biru", code: "bg-pb", func: "Cadangan / PoE / Telepon", detail: "Digunakan untuk transmisi sinyal audio analog telepon atau data tambahan." },
+                { pin: 6, name: "Hijau", code: "bg-h", func: "RX- (Receive Data Negative)", detail: "Menerima sinyal paket data bernilai negatif pada standar T568B." },
+                { pin: 7, name: "Putih - Cokelat", code: "bg-pc", func: "Cadangan / Power Ground", detail: "Penghantar daya listrik tambahan (DC) pada PoE serta pembumian (ground)." },
+                { pin: 8, name: "Cokelat", code: "bg-c", func: "Cadangan / Power Ground", detail: "Penghantar daya listrik tambahan (DC) pada PoE serta pembumian (ground)." }
+            ],
+            'A': [
+                { pin: 1, name: "Putih - Hijau", code: "bg-ph", func: "TX+ (Transmit Data Positive)", detail: "Mengirimkan sinyal paket data bernilai positif pada standar T568A." },
+                { pin: 2, name: "Hijau", code: "bg-h", func: "TX- (Transmit Data Negative)", detail: "Mengirimkan sinyal paket data bernilai negatif pada standar T568A." },
+                { pin: 3, name: "Putih - Oranye", code: "bg-po", func: "RX+ (Receive Data Positive)", detail: "Menerima sinyal paket data bernilai positif pada standar T568A." },
+                { pin: 4, name: "Biru", code: "bg-b", func: "Cadangan / PoE / Telepon", detail: "Jalur saluran cadangan atau Power over Ethernet (PoE)." },
+                { pin: 5, name: "Putih - Biru", code: "bg-pb", func: "Cadangan / PoE / Telepon", detail: "Jalur saluran cadangan atau transmisi sinyal tambahan." },
+                { pin: 6, name: "Oranye", code: "bg-o", func: "RX- (Receive Data Negative)", detail: "Menerima sinyal paket data bernilai negatif pada standar T568A." },
+                { pin: 7, name: "Putih - Cokelat", code: "bg-pc", func: "Cadangan / Power Ground", detail: "Jalur tegangan DC untuk daya PoE dan stabilitas arus." },
+                { pin: 8, name: "Cokelat", code: "bg-c", func: "Cadangan / Power Ground", detail: "Jalur tegangan DC untuk daya PoE dan stabilitas arus." }
+            ]
+        };
+
+        // DATA 25 SOAL KUIS PILIHAN GANDA (A-E)
+        const quizData = [
+            {
+                q: "1. Kepanjangan dari kabel UTP dalam jaringan komputer adalah...",
+                options: ["A. Universal Twisted Pair", "B. Unshielded Twisted Pair", "C. Uniform Transmission Port", "D. Unit Transfer Pair", "E. Ultra Transmission Protocol"],
+                answer: 1,
+                reason: "UTP merupakan singkatan dari Unshielded Twisted Pair, yaitu kabel pasang berbelit tanpa pelindung aluminium foil."
+            },
+            {
+                q: "2. Berapakah jumlah kawat warna yang ada di dalam sebuah kabel UTP?",
+                options: ["A. 4 kawat", "B. 6 kawat", "C. 8 kawat", "D. 10 kawat", "E. 12 kawat"],
+                answer: 2,
+                reason: "Kabel UTP standar memiliki 8 kawat tunggal yang dibagi menjadi 4 pasang lilitan."
+            },
+            {
+                q: "3. Menurut standar T568B, urutan warna untuk Pin nomor 1 adalah...",
+                options: ["A. Putih - Hijau", "B. Oranye", "C. Putih - Oranye", "D. Biru", "E. Putih - Cokelat"],
+                answer: 2,
+                reason: "Urutan standar T568B dimulai dengan Putih-Oranye di pin nomor 1."
+            },
+            {
+                q: "4. Konektor yang secara umum digunakan pada kabel UTP jaringan LAN adalah...",
+                options: ["A. RJ-11", "B. RJ-45", "C. BNC", "D. DB-9", "E. USB Type-C"],
+                answer: 1,
+                reason: "RJ-45 (Registered Jack 45) adalah konektor standar 8-pin untuk jaringan LAN berbasis UTP."
+            },
+            {
+                q: "5. Manakah kombinasi warna kawat yang digunakan khusus untuk Transmit (mengirim data) pada standar T568B?",
+                options: ["A. Putih-Cokelat dan Cokelat", "B. Putih-Biru dan Biru", "C. Putih-Oranye dan Oranye", "D. Putih-Hijau dan Hijau", "E. Hijau dan Biru"],
+                answer: 2,
+                reason: "Pada T568B, Pin 1 (Putih-Oranye) dan Pin 2 (Oranye) bertindak sebagai jalur Transmit (TX)."
+            },
+            {
+                q: "6. Jika kita ingin menghubungkan Laptop langsung ke Laptop lain tanpa Switch, tipe kabel yang harus dibuat secara manual adalah...",
+                options: ["A. Straight-Through", "B. Crossover", "C. Rollover", "D. Serial Cable", "E. Fiber Optic"],
+                answer: 1,
+                reason: "Kabel Crossover digunakan untuk menghubungkan dua perangkat yang sejenis secara langsung (seperti PC ke PC)."
+            },
+            {
+                q: "7. Pada pembuatan kabel Straight-Through, susunan standar warna pada kedua ujung kabel adalah...",
+                options: ["A. Ujung A T568A, Ujung B T568B", "B. Ujung A T568B, Ujung B T568A", "C. Kedua ujung memiliki standar yang sama (A-A atau B-B)", "D. Kedua ujung disusun secara acak", "E. Ujung A balik urutan Ujung B"],
+                answer: 2,
+                reason: "Kabel Straight-Through mensyaratkan urutan pin yang sama persis di kedua ujungnya (misal sama-sama T568B)."
+            },
+            {
+                q: "8. Pasangan warna kabel yang berfungsi menerima data (Receive / RX) pada standar T568B ditempatkan pada pin nomor...",
+                options: ["A. Pin 1 dan 2", "B. Pin 3 dan 6", "C. Pin 4 dan 5", "D. Pin 7 dan 8", "E. Pin 2 dan 4"],
+                answer: 1,
+                reason: "Pada T568B, Receive (RX) ditempatkan pada Pin 3 (Putih-Hijau) dan Pin 6 (Hijau)."
+            },
+            {
+                q: "9. Alat yang berfungsi mengencangkan/mengunci pin tembaga konektor RJ-45 ke kawat kabel UTP dinamakan...",
+                options: ["A. Tang Potong biasa", "B. Solder Listrik", "C. Tang Crimping", "D. Obeng Minus", "E. Multitester"],
+                answer: 2,
+                reason: "Tang Crimping khusus dirancang untuk menjepit pin logam RJ-45 agar menembus isolasi kawat UTP."
+            },
+            {
+                q: "10. Alat yang digunakan untuk menguji apakah seluruh 8 kawat tersambung dengan benar setelah dipasang konektor adalah...",
+                options: ["A. LAN Tester", "B. Router", "C. Protocol Analyzer", "D. Tone Generator", "E. Power Meter"],
+                answer: 0,
+                reason: "LAN Tester memiliki 8-9 lampu LED indikator untuk mengecek kesinambungan koneksi tiap pin."
+            },
+            {
+                q: "11. Warna kawat UTP pada pin 4 dan 5 (Standar T568A maupun T568B) secara berturut-turut adalah...",
+                options: ["A. Biru dan Putih-Biru", "B. Putih-Biru dan Biru", "C. Oranye dan Putih-Oranye", "D. Hijau dan Putih-Hijau", "E. Putih-Cokelat dan Cokelat"],
+                answer: 0,
+                reason: "Pin 4 adalah Biru dan Pin 5 adalah Putih-Biru baik pada standar T568A maupun T568B."
+            },
+            {
+                q: "12. Urutan warna pertama (Pin 1) pada susunan kabel standar T568A adalah...",
+                options: ["A. Putih - Oranye", "B. Putih - Hijau", "C. Putih - Biru", "D. Putih - Cokelat", "E. Hijau"],
+                answer: 1,
+                reason: "Standar T568A diawali dengan kawat warna Putih-Hijau di Pin nomor 1."
+            },
+            {
+                q: "13. Pada jaringan 100 Mbps (Fast Ethernet), berapa jumlah kawat kabel UTP yang sebenarnya aktif mengirim dan menerima paket data?",
+                options: ["A. 2 kawat", "B. 4 kawat", "C. 6 kawat", "D. 8 kawat", "E. 5 kawat"],
+                answer: 1,
+                reason: "Fast Ethernet 10/100 Mbps hanya menggunakan 4 kawat (Pin 1, 2, 3, dan 6)."
+            },
+            {
+                q: "14. Mengapa kawat di dalam kabel UTP dibuat berpasangan dan saling dililitkan (twisted)?",
+                options: ["A. Supaya kabel tidak mudah putus", "B. Mengurangi interferensi dan crosstalk sinyal", "C. Memperindah tampilan warna", "D. Menghemat tempat di dalam bungkus kabel", "E. Memudahkan memotong kabel"],
+                answer: 1,
+                reason: "Lilitan berpasangan bertujuan membatalkan crosstalk (kebocoran elektromagnetik) antar kawat."
+            },
+            {
+                q: "15. Menghubungkan Komputer ke Port Switch/Hub menggunakan tipe kabel...",
+                options: ["A. Crossover", "B. Straight-Through", "C. Rollover", "D. Console", "E. Coaxial"],
+                answer: 1,
+                reason: "Perangkat yang berbeda jenis (Komputer ke Switch) dihubungkan menggunakan kabel Straight-Through."
+            },
+            {
+                q: "16. Berapakah panjang maksimum jangkauan transmisi sinyal data kabel UTP tanpa memerlukan repeater?",
+                options: ["A. 50 Meter", "B. 100 Meter", "C. 200 Meter", "D. 500 Meter", "E. 1000 Meter"],
+                answer: 1,
+                reason: "Batas panjang maksimal kabel UTP standar adalah 100 meter sebelum sinyal melembek (attenuation)."
+            },
+            {
+                q: "17. Fitur modern pada port LAN komputer/switch yang mampu mendeteksi tipe kabel (Straight/Cross) secara otomatis dinamakan...",
+                options: ["A. Auto-MDIX", "B. Auto-DNS", "C. Auto-DHCP", "D. Auto-Duplex", "E. Auto-Routing"],
+                answer: 0,
+                reason: "Auto-MDIX (Medium Dependent Interface Crossover) memungkinkan port secara otomatis menyesuaikan penerimaan/pengiriman sinyal."
+            },
+            {
+                q: "18. Urutan kabel untuk Pin 7 dan 8 pada standar T568B adalah...",
+                options: ["A. Putih-Cokelat dan Cokelat", "B. Cokelat dan Putih-Cokelat", "C. Putih-Hijau dan Hijau", "D. Biru dan Putih-Biru", "E. Oranye dan Putih-Oranye"],
+                answer: 0,
+                reason: "Pin 7 adalah Putih-Cokelat dan Pin 8 adalah Cokelat pada standar T568B (maupun T568A)."
+            },
+            {
+                q: "19. Jika saat diuji dengan LAN Tester untuk kabel Straight T568B, lampu nomor 3 pada induk menyala namun pada anak tidak menyala, artinya...",
+                options: ["A. Kabel berfungsi normal", "B. Kawat nomor 3 (Putih-Hijau) putus / tidak terkontak", "C. Konektor terbalik", "D. Tang crimping rusak", "E. Kabel mengalami korsleting daya"],
+                answer: 1,
+                reason: "Jika salah satu lampu LED tidak menyala, menandakan jalur pin kawat tersebut terputus atau tidak terpasang rapat pada pin RJ-45."
+            },
+            {
+                q: "20. Kabel UTP dikategorikan berdasarkan kecepatannya. Kategori yang umum digunakan untuk standar Gigabit Ethernet (1000 Mbps) adalah...",
+                options: ["A. Cat 3", "B. Cat 5e / Cat 6", "C. Cat 1", "D. Cat 2", "E. Coaxial RG6"],
+                answer: 1,
+                reason: "Category 5e (Cat5e) dan Category 6 (Cat6) dirancang khusus mendukun frekuensi tinggi hingga 1 Gbps."
+            },
+            {
+                q: "21. Apakah fungsi dari kawat warna Cokelat dan Putih-Cokelat pada pengkabelan standar?",
+                options: ["A. Transmit Data Utama", "B. Receive Data Utama", "C. Ground / Cadangan Listrik PoE", "D. Pembawa Frekuensi Radio", "E. Mengontrol Suhu Kabel"],
+                answer: 2,
+                reason: "Pin 7 dan 8 (Putih-Cokelat & Cokelat) berfungsi sebagai grounding dan menyalurkan arus listrik DC pada teknologi Power over Ethernet."
+            },
+            {
+                q: "22. Pada kabel Crossover, Pin 1 pada Ujung A (Putih-Hijau) dihubungkan ke Pin berapa pada Ujung B?",
+                options: ["A. Pin 1", "B. Pin 2", "C. Pin 3", "D. Pin 6", "E. Pin 8"],
+                answer: 2,
+                reason: "Pada kabel Crossover, pasangan Transmit di Ujung A (Pin 1&2) disilang ke pasangan Receive di Ujung B (Pin 3&6)."
+            },
+            {
+                q: "23. Posisi pengunci plastik pada konektor RJ-45 saat hendak memasukkan kawat dan mencrimping sebaiknya menghadap ke...",
+                options: ["A. Atas", "B. Bawah (membelakangi kita)", "C. Kiri", "D. Kanan", "E. Bebas ke mana saja"],
+                answer: 1,
+                reason: "Saat menghitung urutan Pin 1 sampai 8 (kiri ke kanan), pengunci tembus pandang RJ-45 menghadap ke bawah/membelakangi pandangan mata."
+            },
+            {
+                q: "24. Teknologi yang memungkinkan kabel UTP menyalurkan daya listrik bersamaan dengan paket data dinamakan...",
+                options: ["A. Power over Ethernet (PoE)", "B. Data Power Delivery", "C. High Voltage LAN", "D. Direct Current Network", "E. EtherPower"],
+                answer: 0,
+                reason: "PoE (Power over Ethernet) memungkinkan perangkat seperti IP Camera atau Access Point menerima daya listrik lewat kabel LAN UTP."
+            },
+            {
+                q: "25. Pengampu Mata Pelajaran Informatika di SMA Negeri 1 Warmare yang mengajar modul ini adalah...",
+                options: ["A. Musadad, S.Pd.", "B. Anwar Musadad, S.Kom., Gr.", "C. Ahmad Musadad, M.T.", "D. Anwar Ibrahim, S.T.", "E. Musadad Muslih, S.Kom."],
+                answer: 1,
+                reason: "Sesuai identitas modul pembelajaran TIK SMA Negeri 1 Warmare, Guru Pengampu adalah Bapak Anwar Musadad, S.Kom., Gr."
+            }
+        ];
+
+        // STATE KUIS
+        let currentQuizIndex = 0;
+        let userAnswers = new Array(quizData.length).fill(null);
+        let simStandard = 'B';
+
+        // SWAP TAB
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-md', 'shadow-indigo-200');
+                btn.classList.add('text-slate-600', 'hover:bg-slate-100');
+            });
+
+            document.getElementById(`content-${tabName}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabName}`);
+            activeBtn.classList.add('bg-indigo-600', 'text-white', 'shadow-md', 'shadow-indigo-200');
+            activeBtn.classList.remove('text-slate-600', 'hover:bg-slate-100');
+        }
+
+        // SIMULASI INTERAKTIF
+        function setSimStandard(std) {
+            simStandard = std;
+            const btnA = document.getElementById('btn-std-a');
+            const btnB = document.getElementById('btn-std-b');
+
+            if(std === 'B') {
+                btnB.className = "px-6 py-2.5 rounded-xl font-bold text-sm transition-all bg-indigo-600 text-white shadow-sm";
+                btnA.className = "px-6 py-2.5 rounded-xl font-bold text-sm transition-all text-slate-600 hover:text-slate-900";
+            } else {
+                btnA.className = "px-6 py-2.5 rounded-xl font-bold text-sm transition-all bg-indigo-600 text-white shadow-sm";
+                btnB.className = "px-6 py-2.5 rounded-xl font-bold text-sm transition-all text-slate-600 hover:text-slate-900";
+            }
+
+            renderSimulation();
+        }
+
+        function renderSimulation() {
+            const container = document.getElementById('sim-wire-container');
+            container.innerHTML = '';
+
+            const list = wireData[simStandard];
+            list.forEach((w, idx) => {
+                const wireEl = document.createElement('div');
+                wireEl.className = "flex flex-col items-center gap-2 cursor-pointer group";
+                wireEl.onclick = () => selectWire(idx);
+
+                wireEl.innerHTML = `
+                    <span class="text-[10px] font-mono font-bold text-slate-400 group-hover:text-white">PIN ${w.pin}</span>
+                    <div class="w-full h-32 rounded-lg ${w.code} border border-slate-600 shadow-inner group-hover:scale-105 transition-transform"></div>
+                `;
+                container.appendChild(wireEl);
+            });
+
+            // Auto select pin 1
+            selectWire(0);
+        }
+
+        function selectWire(index) {
+            const item = wireData[simStandard][index];
+            document.getElementById('detail-color-badge').className = `w-6 h-6 rounded-full border border-slate-400 ${item.code}`;
+            document.getElementById('detail-title').innerText = `Pin ${item.pin}: ${item.name} (${item.func})`;
+            document.getElementById('detail-desc').innerText = item.detail;
+        }
+
+        // KUIS LOGIC
+        function startQuiz() {
+            document.getElementById('quiz-start-screen').classList.add('hidden');
+            document.getElementById('quiz-active-screen').classList.remove('hidden');
+            currentQuizIndex = 0;
+            userAnswers = new Array(quizData.length).fill(null);
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const q = quizData[currentQuizIndex];
+            document.getElementById('quiz-progress-text').innerText = `${currentQuizIndex + 1} / ${quizData.length}`;
+            document.getElementById('quiz-progress-bar').style.width = `${((currentQuizIndex + 1) / quizData.length) * 100}%`;
+            document.getElementById('quiz-question-text').innerText = q.q;
+
+            const optsContainer = document.getElementById('quiz-options-container');
+            optsContainer.innerHTML = '';
+
+            q.options.forEach((optText, optIdx) => {
+                const isSelected = userAnswers[currentQuizIndex] === optIdx;
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left p-4 rounded-xl border text-sm transition-all flex items-center justify-between ${
+                    isSelected 
+                    ? 'border-indigo-600 bg-indigo-50 font-semibold text-indigo-900 shadow-sm' 
+                    : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-700'
+                }`;
+                btn.onclick = () => selectOption(optIdx);
+
+                btn.innerHTML = `
+                    <span>${optText}</span>
+                    ${isSelected ? '<i class="fa-solid fa-circle-check text-indigo-600"></i>' : '<i class="fa-regular fa-circle text-slate-300"></i>'}
+                `;
+                optsContainer.appendChild(btn);
+            });
+
+            // Control Nav Buttons
+            document.getElementById('btn-prev-q').style.visibility = currentQuizIndex === 0 ? 'hidden' : 'visible';
+            const nextBtn = document.getElementById('btn-next-q');
+            if(currentQuizIndex === quizData.length - 1) {
+                nextBtn.innerHTML = `Selesai & Lihat Hasil <i class="fa-solid fa-check"></i>`;
+                nextBtn.className = "px-6 py-2.5 rounded-xl text-white font-semibold bg-emerald-600 hover:bg-emerald-700 text-sm flex items-center gap-2 shadow-sm";
+            } else {
+                nextBtn.innerHTML = `Selanjutnya <i class="fa-solid fa-arrow-right"></i>`;
+                nextBtn.className = "px-6 py-2.5 rounded-xl text-white font-semibold bg-indigo-600 hover:bg-indigo-700 text-sm flex items-center gap-2 shadow-sm";
+            }
+        }
+
+        function selectOption(optIdx) {
+            userAnswers[currentQuizIndex] = optIdx;
+            renderQuestion();
+        }
+
+        function prevQuestion() {
+            if(currentQuizIndex > 0) {
+                currentQuizIndex--;
+                renderQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if(currentQuizIndex < quizData.length - 1) {
+                currentQuizIndex++;
+                renderQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            document.getElementById('quiz-active-screen').classList.add('hidden');
+            document.getElementById('quiz-result-screen').classList.remove('hidden');
+
+            let correctCount = 0;
+            quizData.forEach((q, idx) => {
+                if(userAnswers[idx] === q.answer) {
+                    correctCount++;
+                }
+            });
+
+            const score = Math.round((correctCount / quizData.length) * 100);
+            document.getElementById('score-circle').innerText = score;
+            document.getElementById('score-summary-text').innerText = `Kamu menjawab ${correctCount} dari ${quizData.length} soal dengan benar!`;
+
+            // Render Pembahasan
+            const discContainer = document.getElementById('discussion-container');
+            discContainer.innerHTML = '';
+
+            quizData.forEach((q, idx) => {
+                const isCorrect = userAnswers[idx] === q.answer;
+                const userChoice = userAnswers[idx] !== null ? q.options[userAnswers[idx]] : "Tidak Dijawab";
+
+                const discBox = document.createElement('div');
+                discBox.className = `p-4 rounded-2xl border ${isCorrect ? 'border-emerald-200 bg-emerald-50/50' : 'border-rose-200 bg-rose-50/50'} text-sm space-y-2`;
+                
+                discBox.innerHTML = `
+                    <div class="flex items-start justify-between gap-2">
+                        <p class="font-bold text-slate-800">${q.q}</p>
+                        <span class="text-xs px-2.5 py-1 rounded-full font-bold ${isCorrect ? 'bg-emerald-200 text-emerald-800' : 'bg-rose-200 text-rose-800'}">
+                            ${isCorrect ? 'Benar' : 'Salah'}
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-600">Jawaban Kamu: <span class="font-semibold ${isCorrect ? 'text-emerald-700' : 'text-rose-700'}">${userChoice}</span></p>
+                    <p class="text-xs text-slate-700">Kunci Jawaban: <span class="font-bold text-slate-900">${q.options[q.answer]}</span></p>
+                    <p class="text-xs text-slate-500 bg-white p-2 rounded-lg border border-slate-100">💡 <b>Pembahasan:</b> ${q.reason}</p>
+                `;
+
+                discContainer.appendChild(discBox);
+            });
+        }
+
+        function restartQuiz() {
+            document.getElementById('quiz-result-screen').classList.add('hidden');
+            document.getElementById('quiz-start-screen').classList.remove('hidden');
+        }
+
+        // INITIAL ON LOAD
+        window.onload = function() {
+            renderSimulation();
+        };
+    </script>
+</body>
+</html>
